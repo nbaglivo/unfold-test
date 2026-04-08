@@ -1,0 +1,67 @@
+{
+  "services": [
+    {
+      "id": "unfold-engine",
+      "label": "Unfold Engine",
+      "type": "internal",
+      "state": "live",
+      "purpose": "Derives the architecture graph from ADRs and writes architecture.json to the user repository",
+      "owner": null,
+      "tech": [
+        "hono",
+        "node.js",
+        "railway"
+      ],
+      "repository": null,
+      "api": null
+    },
+    {
+      "id": "unfold-lens",
+      "label": "Unfold Lens",
+      "type": "internal",
+      "state": "live",
+      "purpose": "Reads architecture.json and renders the visual architecture graph",
+      "owner": null,
+      "tech": [
+        "next.js",
+        "vercel"
+      ],
+      "repository": null,
+      "api": null
+    },
+    {
+      "id": "github",
+      "label": "GitHub",
+      "type": "external",
+      "state": "live",
+      "purpose": "Hosts the user repository, stores architecture.json, provides webhooks and raw file access",
+      "owner": null,
+      "tech": [
+        "github"
+      ],
+      "repository": null,
+      "api": null
+    }
+  ],
+  "connections": [
+    {
+      "from": "unfold-engine",
+      "to": "github",
+      "type": "http",
+      "label": "commits architecture.json"
+    },
+    {
+      "from": "github",
+      "to": "unfold-engine",
+      "type": "webhook",
+      "label": "push webhook"
+    },
+    {
+      "from": "github",
+      "to": "unfold-lens",
+      "type": "http",
+      "label": "serves architecture.json"
+    }
+  ],
+  "events": []
+}
